@@ -5,10 +5,10 @@ RUN dotnet restore
 COPY . ./
 RUN dotnet publish -c Release -o /out --no-restore
 
+# aspnet:8.0-alpine already ships a non-root `app` user — do not adduser again.
 FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine
-RUN adduser -D -u 10001 app
 WORKDIR /app
-COPY --from=build /out ./
+COPY --from=build --chown=app:app /out ./
 USER app
 EXPOSE 8080
 ENV PORT=8080 ASPNETCORE_URLS=http://0.0.0.0:8080
