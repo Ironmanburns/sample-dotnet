@@ -5,4 +5,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Version>0.1.0</Version>
   </PropertyGroup>
+
+  <!-- tests/ is a separate xUnit project; keep its sources out of the web app build. -->
+  <ItemGroup>
+    <Compile Remove="tests/**/*.cs" />
+  </ItemGroup>
 </Project>
