@@ -6,7 +6,7 @@ COPY . ./
 RUN dotnet publish -c Release -o /out --no-restore
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine
-RUN adduser -D -u 10001 app
+# The .NET 8 images ship a non-root "app" user (uid 1654); creating it again fails.
 WORKDIR /app
 COPY --from=build /out ./
 USER app
